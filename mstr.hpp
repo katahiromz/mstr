@@ -3,7 +3,7 @@
 // This file is public domain software.
 
 #ifndef MSTR_HPP_
-#define MSTR_HPP_   10  // Version 10s
+#define MSTR_HPP_   11  // Version 11
 
 #include <string>       // for std::string and std::wstring
 #include <vector>       // for std::vector
@@ -362,7 +362,8 @@ inline void mstr_hex_ch(T_STR& str, typename T_STR::value_type ch,
         else
             str += T_CHAR('0' + value);
 
-        ch >>= 8;
+        if (sizeof(T_CHAR) > 1)
+            ch >>= 8;
     }
 
     std::reverse(str.begin(), str.end());
