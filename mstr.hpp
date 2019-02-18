@@ -3,7 +3,7 @@
 // This file is public domain software.
 
 #ifndef MSTR_HPP_
-#define MSTR_HPP_   11  // Version 11
+#define MSTR_HPP_   12  // Version 12
 
 #include <string>       // for std::string and std::wstring
 #include <vector>       // for std::vector
@@ -168,8 +168,7 @@ template <typename T_STR>
 inline size_t
 mstr_replace(T_STR& str, const T_STR& from, const T_STR& to)
 {
-    size_t ret = 0;
-    size_t i = 0;
+    size_t ret = 0, i = 0;
     for (;;)
     {
         i = str.find(from, i);
@@ -338,7 +337,6 @@ inline void mstr_oct_ch(T_STR& str, unsigned char ch)
 {
     typedef typename T_STR::value_type T_CHAR;
     str.clear();
-    str.reserve(3);
     str += T_CHAR('0' + (ch & 7));
     ch >>= 7;
     str += T_CHAR('0' + (ch & 7));
@@ -461,6 +459,7 @@ inline void
 mstr_quote(T_STR& dest, const T_STR& str)
 {
     typedef typename T_STR::value_type T_CHAR;
+    dest.clear();
     dest += T_CHAR('\"');
     dest += mstr_escape(str);
     dest += T_CHAR('\"');
