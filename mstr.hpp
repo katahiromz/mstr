@@ -52,6 +52,7 @@ inline T_CHAR *mstrrchr(T_CHAR *str, T_CHAR ch)
     }
 #endif
     T_CHAR *ptr = NULL;
+    assert(str != NULL);
     while (*str)
     {
         if (*str == ch)
@@ -71,6 +72,7 @@ inline const T_CHAR *mstrrchr(const T_CHAR *str, T_CHAR ch)
     }
 #endif
     const T_CHAR *ptr = NULL;
+    assert(str != NULL);
     while (*str)
     {
         if (*str == ch)
