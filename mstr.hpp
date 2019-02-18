@@ -332,7 +332,7 @@ inline bool mstr_trim_right_test(const std::string& raw,
 // escape and quote
 
 template <typename T_STR>
-inline void mstr_oct_ch(T_STR& str, char ch)
+inline void mstr_oct_ch(T_STR& str, unsigned char ch)
 {
     typedef typename T_STR::value_type T_CHAR;
     str.clear();
@@ -401,7 +401,7 @@ mstr_escape(T_STR& ret, const T_STR& src)
                 if (sizeof(T_CHAR) == 1)
                 {
                     T_STR str;
-                    mstr_oct_ch(str, ch);
+                    mstr_oct_ch(str, (char)ch);
                     ret += T_CHAR('\\');
                     ret += str;
                 }
