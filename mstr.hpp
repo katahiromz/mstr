@@ -218,14 +218,10 @@ mstr_trim(std::basic_string<T_CHAR>& str, const std::basic_string<T_CHAR>& space
     typedef std::basic_string<T_CHAR> string_type;
     size_t i = str.find_first_not_of(spaces);
     size_t j = str.find_last_not_of(spaces);
-    if ((i == string_type::npos) || (j == string_type::npos))
-    {
-        str.clear();
-    }
-    else
-    {
+    if ((i != string_type::npos) && (j != string_type::npos))
         str = str.substr(i, j - i + 1);
-    }
+    else
+        str.clear();
 }
 
 template <typename T_CHAR>
@@ -241,14 +237,10 @@ mstr_trim_left(std::basic_string<T_CHAR>& str, const std::basic_string<T_CHAR>& 
 {
     typedef std::basic_string<T_CHAR> string_type;
     size_t i = str.find_first_not_of(spaces);
-    if (i == string_type::npos)
-    {
-        str.clear();
-    }
-    else
-    {
+    if (i != string_type::npos)
         str = str.substr(i);
-    }
+    else
+        str.clear();
 }
 
 template <typename T_CHAR>
@@ -264,14 +256,10 @@ mstr_trim_right(std::basic_string<T_CHAR>& str, const std::basic_string<T_CHAR>&
 {
     typedef std::basic_string<T_CHAR> string_type;
     size_t j = str.find_last_not_of(spaces);
-    if (j == string_type::npos)
-    {
-        str.clear();
-    }
-    else
-    {
+    if (j != string_type::npos)
         str = str.substr(0, j + 1);
-    }
+    else
+        str.clear();
 }
 
 template <typename T_CHAR>
