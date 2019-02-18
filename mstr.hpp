@@ -3,7 +3,7 @@
 // This file is public domain software.
 
 #ifndef MSTR_HPP_
-#define MSTR_HPP_   12  // Version 12
+#define MSTR_HPP_   13  // Version 13
 
 #include <string>       // for std::string and std::wstring
 #include <vector>       // for std::vector
@@ -137,30 +137,6 @@ mstr_join(const T_STR_CONTAINER& container,
     return result;
 }
 
-inline bool
-mstr_split_join_test(const std::string& raw, const std::string& sep,
-                     size_t num_expected)
-{
-    std::vector<std::string> splitted;
-    size_t num = mstr_split(splitted, raw, sep);
-    if (num != num_expected)
-    {
-        std::printf("mstr_split_join_test: raw '%s', num_expected %u, num was %u\n",
-                    raw.c_str(), (int)num_expected, (int)num);
-        assert(0);
-        return false;
-    }
-    std::string joined = mstr_join(splitted, sep);
-    if (raw != joined)
-    {
-        std::printf("mstr_split_join_test: raw '%s', joined '%s'\n",
-                    raw.c_str(), joined.c_str());
-        assert(0);
-        return false;
-    }
-    return true;
-}
-
 //////////////////////////////////////////////////////////////////////////////
 // replace
 
@@ -188,24 +164,6 @@ mstr_replace(T_STR& str,
              const typename T_STR::value_type *to)
 {
     return mstr_replace(str, T_STR(from), T_STR(to));
-}
-
-inline bool
-mstr_replace_test(const std::string& raw,
-                  const std::string& from,
-                  const std::string& to,
-                  const std::string& expected)
-{
-    std::string str = raw;
-    mstr_replace(str, from, to);
-    if (str != expected)
-    {
-        std::printf("mstr_replace_test: raw '%s', result '%s', expected '%s'\n",
-                    raw.c_str(), str.c_str(), expected.c_str());
-        assert(0);
-        return false;
-    }
-    return true;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -267,54 +225,6 @@ inline void
 mstr_trim_right(std::basic_string<T_CHAR>& str, const T_CHAR *spaces)
 {
     mstr_trim_right(str, std::basic_string<T_CHAR>(spaces));
-}
-
-inline bool mstr_trim_test(const std::string& raw,
-                           const std::string& spaces,
-                           const std::string& expected)
-{
-    std::string str = raw;
-    mstr_trim(str, spaces);
-    if (str != expected)
-    {
-        std::printf("mstr_trim_test: raw '%s', result '%s', expected '%s'\n",
-                    raw.c_str(), str.c_str(), expected.c_str());
-        assert(0);
-        return false;
-    }
-    return true;
-}
-
-inline bool mstr_trim_left_test(const std::string& raw,
-                                const std::string& spaces,
-                                const std::string& expected)
-{
-    std::string str = raw;
-    mstr_trim_left(str, spaces);
-    if (str != expected)
-    {
-        std::printf("mstr_trim_left_test: raw '%s', result '%s', expected '%s'\n",
-                    raw.c_str(), str.c_str(), expected.c_str());
-        assert(0);
-        return false;
-    }
-    return true;
-}
-
-inline bool mstr_trim_right_test(const std::string& raw,
-                                 const std::string& spaces,
-                                 const std::string& expected)
-{
-    std::string str = raw;
-    mstr_trim_right(str, spaces);
-    if (str != expected)
-    {
-        std::printf("mstr_trim_right_test: raw '%s', result '%s', expected '%s'\n",
-                    raw.c_str(), str.c_str(), expected.c_str());
-        assert(0);
-        return false;
-    }
-    return true;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -472,6 +382,101 @@ mstr_quote(const T_CHAR *src)
     return ret;
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// tests
+
+#ifndef MSTR_NO_TESTS
+
+inline bool
+mstr_split_join_test(const std::string& raw, const std::string& sep,
+                     size_t num_expected)
+{
+    std::vector<std::string> splitted;
+    size_t num = mstr_split(splitted, raw, sep);
+    if (num != num_expected)
+    {
+        std::printf("mstr_split_join_test: raw '%s', num_expected %u, num was %u\n",
+                    raw.c_str(), (int)num_expected, (int)num);
+        assert(0);
+        return false;
+    }
+    std::string joined = mstr_join(splitted, sep);
+    if (raw != joined)
+    {
+        std::printf("mstr_split_join_test: raw '%s', joined '%s'\n",
+                    raw.c_str(), joined.c_str());
+        assert(0);
+        return false;
+    }
+    return true;
+}
+
+inline bool
+mstr_replace_test(const std::string& raw,
+                  const std::string& from,
+                  const std::string& to,
+                  const std::string& expected)
+{
+    std::string str = raw;
+    mstr_replace(str, from, to);
+    if (str != expected)
+    {
+        std::printf("mstr_replace_test: raw '%s', result '%s', expected '%s'\n",
+                    raw.c_str(), str.c_str(), expected.c_str());
+        assert(0);
+        return false;
+    }
+    return true;
+}
+
+inline bool mstr_trim_test(const std::string& raw,
+                           const std::string& spaces,
+                           const std::string& expected)
+{
+    std::string str = raw;
+    mstr_trim(str, spaces);
+    if (str != expected)
+    {
+        std::printf("mstr_trim_test: raw '%s', result '%s', expected '%s'\n",
+                    raw.c_str(), str.c_str(), expected.c_str());
+        assert(0);
+        return false;
+    }
+    return true;
+}
+
+inline bool mstr_trim_left_test(const std::string& raw,
+                                const std::string& spaces,
+                                const std::string& expected)
+{
+    std::string str = raw;
+    mstr_trim_left(str, spaces);
+    if (str != expected)
+    {
+        std::printf("mstr_trim_left_test: raw '%s', result '%s', expected '%s'\n",
+                    raw.c_str(), str.c_str(), expected.c_str());
+        assert(0);
+        return false;
+    }
+    return true;
+}
+
+inline bool mstr_trim_right_test(const std::string& raw,
+                                 const std::string& spaces,
+                                 const std::string& expected)
+{
+    std::string str = raw;
+    mstr_trim_right(str, spaces);
+    if (str != expected)
+    {
+        std::printf("mstr_trim_right_test: raw '%s', result '%s', expected '%s'\n",
+                    raw.c_str(), str.c_str(), expected.c_str());
+        assert(0);
+        return false;
+    }
+    return true;
+}
+
 inline bool
 mstr_escape_test(const std::string& raw, const std::string& expected)
 {
@@ -501,9 +506,6 @@ mstr_escape_test(const std::string& raw, const std::string& expected)
         return true;
     }
 #endif
-
-//////////////////////////////////////////////////////////////////////////////
-// unittest
 
 inline bool mstr_unittest(void)
 {
@@ -591,6 +593,8 @@ inline bool mstr_unittest(void)
            mstr_split_join_test("ABC", ">", 1) &&
            true;
 }
+
+#endif  // ndef MSTR_NO_TESTS
 
 //////////////////////////////////////////////////////////////////////////////
 
