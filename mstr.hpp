@@ -3,7 +3,7 @@
 // This file is public domain software.
 
 #ifndef MSTR_HPP_
-#define MSTR_HPP_   13  // Version 13
+#define MSTR_HPP_   14  // Version 14
 
 #include <string>       // for std::string and std::wstring
 #include <vector>       // for std::vector
@@ -91,13 +91,14 @@ mstr_split(T_STR_CONTAINER& container,
            const typename T_STR_CONTAINER::value_type& str,
            const typename T_STR_CONTAINER::value_type& sep)
 {
+    typedef typename T_STR_CONTAINER::value_type T_STR;
     container.clear();
 #ifndef MSTR_SPLIT_NO_SPECIAL_HANDLING
     if (sep.empty())
     {
         for (size_t i = 0; i < str.size(); ++i)
         {
-            std::string t(1, str[i]);
+            T_STR t(1, str[i]);
             container.push_back(t);
         }
     }
